@@ -29,7 +29,6 @@ namespace Lab7_OOP
             new CPolygon(0,0,c)
         };
         string cur_select = "CCircle"; // текущий выбор фигуры, которая будет создаваться при нажатии на пустое место 
-        CGroup cur_group; // текущая выбранная группа
         CObject line_st = null; // точка - начало отрезка
         public int mouseX = 0;
         public int mouseY = 0;
@@ -74,7 +73,7 @@ namespace Lab7_OOP
             if (changeSize == true)
                 for (int i = 0; i < storObj.get_count(); ++i)
                     if (storObj.get_el(i).get_highlighted() == true)
-                        storObj.get_el(i).resize(size_delt, pictureBox1.Width, pictureBox1.Height);
+                        storObj.get_el(i).resize(size_delt, pictureBox1.Width, pictureBox1.Height,10);
 
             // передвижение объектов вправо-влево-вверх-вниз
             int move = 0;
@@ -263,6 +262,19 @@ namespace Lab7_OOP
             storObj.add(new_group);
             // объекты внутри группы и группа(рамка) выделяются
             storObj.get_el(i).change_highlight();
+            pictureBox1.Invalidate();
+        }
+
+        private void btn_DisGroup_Click(object sender, EventArgs e)
+        {   // из всех выделенных групп переносим объекты в хранилище и удаляем группы из хранилища
+            for (int i = 0; i < storObj.get_count(); ++i)
+                if (storObj.get_el(i).get_highlighted() == true && storObj.get_el(i).classname() == "CGroup")
+                {
+                    for (int j = 0; j < (storObj.get_el(i) as CGroup).get_count(); ++j)
+                        storObj.add((storObj.get_el(i) as CGroup).get_el(j));
+                    storObj.del(i);
+                    i--;
+                }
             pictureBox1.Invalidate();
         }
     }

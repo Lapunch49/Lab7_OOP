@@ -43,34 +43,7 @@ namespace Lab7_OOP
         {
             return new CObject();
         }
-        public virtual void resize(bool inc, int pbW, int pbH) { }
-        //public virtual bool check_move(int move, int pbW, int pbH)
-        //{
-        //    switch (move)
-        //    {
-        //        case 1:
-        //            {
-        //                if (x + 10 > pbW) x = pbW;
-        //                return (x + 10 <= pbW);
-        //            }
-        //        case -1:
-        //            {
-        //                if (x - 10 < 0) x = 0;
-        //                return (x - 10 >= 0);
-        //            }
-        //        case 2:
-        //            {
-        //                if (y - 10 < 0) y = 0;
-        //                return (y - 10 >= 0);
-        //            }
-        //        case -2:
-        //            {
-        //                if (y + 10 > pbH) y = pbH;
-        //                return (y + 10 <= pbH);
-        //            }
-        //        default: return false;
-        //    }
-        //}
+        public virtual void resize(bool inc, int pbW, int pbH,int d) { }
         public virtual int check_move(int move, int pbW, int pbH, int d)
         {
             switch (move)
@@ -95,7 +68,7 @@ namespace Lab7_OOP
                     default: break;
                 }
         }
-        protected virtual int check_resize(bool inc, int pbW, int pbH) // возвращает значение, на которое увеличится объект
+        public virtual int check_resize(bool inc, int pbW, int pbH) // возвращает значение, на которое увеличится объект
         {
             return 10;
         }
@@ -184,7 +157,7 @@ namespace Lab7_OOP
                 default: return 0;
             }
         }
-        protected override int check_resize(bool inc, int pbW, int pbH)
+        public override int check_resize(bool inc, int pbW, int pbH)
         {
             int i = 10;
             if (inc == true)
@@ -196,14 +169,13 @@ namespace Lab7_OOP
             }
             return i;
         }
-        public override void resize(bool inc, int pbW, int pbH)
+        public override void resize(bool inc, int pbW, int pbH, int d)
         {
             if (inc == true)
             {
                 int delt_size = check_resize(inc, pbW, pbH);
+                delt_size = Math.Min(delt_size, d);
                 if (w != h)
-                    //h = h + delt_size *h/w;
-                    //float delt_siz2 = (float)delt_size * h / ((float)w);
                     h += (int)((float)delt_size * h / ((float)w));
                 else h += delt_size;
                 w += delt_size;
@@ -325,17 +297,18 @@ namespace Lab7_OOP
                 return true;
             else return false;
         }
-        public override void resize(bool inc, int pbW, int pbH)
+        public override void resize(bool inc, int pbW, int pbH, int d)
         {
             if (inc == true)
             {
                 int delt_size = check_resize(inc, pbW, pbH);
+                //delt_size = Math.Min(delt_size, d);
                 if (w != h)
                     w += delt_size / 2;
                 else w += delt_size;
                 h += delt_size;
             }
-            else if (h > 10)
+            else if (h > 40)
             {
                 w -= 5; h -= 10;
             }
@@ -422,14 +395,14 @@ namespace Lab7_OOP
                 }
             }
         }
-        protected override int check_resize(bool inc, int pbW, int pbH)
+        public override int check_resize(bool inc, int pbW, int pbH)
         {
             if (x == 0 || Point1.get_x() == 0 || x == pbW || Point1.get_x() == pbW
                 || y == 0 || Point1.get_y() == 0 || y == pbH || Point1.get_y() == pbH)
                 return 0;
             else return 1;
         }
-        public override void resize(bool inc, int pbW, int pbH)
+        public override void resize(bool inc, int pbW, int pbH, int dd)
         {
             // для простоты представляем отрезок диагональю прямоугольника, который хотим увеличить
             // его параметры:
@@ -444,10 +417,12 @@ namespace Lab7_OOP
             {
                 int d; // на сколько увеличим по x
                 // находим допустимое увеличение по x и по y
-                int dx = 40;
+                //int dx = 40;
+                int dx = dd;
                 if (x0 + w + dx > pbW) dx = pbW - x0 - w;
                 if (x0 - dx < 0) dx = x0;
-                int dy = 40; 
+                //int dy = 40; 
+                int dy = dd;
                 if (y0 + h + dy > pbH) dy = pbH - y0 - h;
                 if (y0 - h < 0) dy = y0;
                 d = Math.Min(dx, dy);
@@ -458,8 +433,8 @@ namespace Lab7_OOP
             else if (inc == false) // уменьшение
             {
                 if (Math.Max(h,w)>45)
-                    if (h < w ) { inflateSize = new Size(-40, -40 * h / w); }
-                    else { inflateSize = new Size(-40 * w / h, -40); }
+                    if (h < w ) { inflateSize = new Size(-dd, -dd * h / w); }
+                    else { inflateSize = new Size(-dd * w / h, -dd); }
             }
             rect.Inflate(inflateSize);
             // присваиваем новые значения координатам нашего отрезка
@@ -542,6 +517,7 @@ namespace Lab7_OOP
         }
         private Rectangle get_rect()
         {
+            // находим самые крайние координаты - углы прямоугольника-рамки
             int x0 = objects[0].get_leftrightX(true), y0 = objects[0].get_updownY(true);
             int x1 = 0, y1 = 0;
             for (int i=0; i<count; ++i)
@@ -555,12 +531,15 @@ namespace Lab7_OOP
                 tmp_xy = objects[i].get_updownY(false);
                 if (tmp_xy > y1) y1 = tmp_xy;
             }
+            // обновляем значения свойств x,y,w,h
             w = x1 - x0; h = y1 - y0;
             x = x0 + w / 2; y = y0 + h / 2;
+
         return new Rectangle(x0, y0, w, h);
         }
         public override void move(int move, int pbW, int pbH, int d)
         {
+            // вычисляем возможную для всей группы велечину перемещения
             d = check_move(move, pbW, pbH, d);
             for (int i = 0; i < count; ++i)
             {
@@ -575,11 +554,21 @@ namespace Lab7_OOP
             // рисуем рамку
             Rectangle rect = get_rect();
             Brush.normPen.Color = color;
-            Brush.normPen.DashStyle = new DashStyle();
-            Brush.highlightPen.DashStyle = new DashStyle();
             if (highlighted == false)
                 e.Graphics.DrawRectangle(Brush.normPen, rect);
             else e.Graphics.DrawRectangle(Brush.highlightPen, rect);
+        }
+        public override void resize(bool inc, int pbW, int pbH, int d)
+        {   // находим возможную для всей группы величину увел/умен
+            //int tmp_d;
+            //for (int i = 0; i < count; ++i)
+            //{
+            //    tmp_d = objects[i].check_resize(inc, pbW, pbH);
+            //    d = Math.Min(tmp_d, d);
+            //}
+            // поочередно изменяем размер каждого объекта внутри группы
+            for (int i = 0; i < count; ++i)
+                objects[i].resize(inc, pbW, pbH, 10);
         }
         public override void change_highlight()
         {
@@ -593,5 +582,16 @@ namespace Lab7_OOP
             for (int i = 0; i < count; i++)
                 objects[i].set_color(new_color);
         }
+        public int get_count()
+        {
+            return count;
+        }
+        public CObject get_el(int ind)
+        {
+            if (ind < count)
+                return objects[ind];
+            else return null;
+        }
+        public override string classname() { return "CGroup"; }
     }
 }

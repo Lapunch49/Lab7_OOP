@@ -802,6 +802,7 @@ namespace Lab7_OOP
             this.btn_DisGroup.Size = new System.Drawing.Size(43, 47);
             this.btn_DisGroup.TabIndex = 5;
             this.btn_DisGroup.UseVisualStyleBackColor = false;
+            this.btn_DisGroup.Click += new System.EventHandler(this.btn_DisGroup_Click);
             // 
             // btn_Group
             // 
@@ -882,7 +883,6 @@ namespace Lab7_OOP
         private System.Windows.Forms.Button CTrapeze;
         private System.Windows.Forms.Button CLine;
         private System.Windows.Forms.Button CRhomb;
-        private System.Windows.Forms.Button btn_CEllipse;
         private System.Windows.Forms.Button CRectangle;
         private System.Windows.Forms.Button btn_clear;
         private System.Windows.Forms.Panel panel7;
