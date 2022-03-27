@@ -84,6 +84,10 @@ namespace Lab7_OOP
             this.CCircle = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.panel8 = new System.Windows.Forms.Panel();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.label8 = new System.Windows.Forms.Label();
+            this.btn_DisGroup = new System.Windows.Forms.Button();
+            this.btn_Group = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel7.SuspendLayout();
@@ -97,6 +101,7 @@ namespace Lab7_OOP
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel8.SuspendLayout();
+            this.panel9.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -754,6 +759,7 @@ namespace Lab7_OOP
             // 
             // panel8
             // 
+            this.panel8.Controls.Add(this.panel9);
             this.panel8.Controls.Add(this.pictureBox1);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(168, 0);
@@ -761,6 +767,55 @@ namespace Lab7_OOP
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(685, 635);
             this.panel8.TabIndex = 2;
+            // 
+            // panel9
+            // 
+            this.panel9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel9.Controls.Add(this.label8);
+            this.panel9.Controls.Add(this.btn_DisGroup);
+            this.panel9.Controls.Add(this.btn_Group);
+            this.panel9.Location = new System.Drawing.Point(598, 0);
+            this.panel9.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(87, 199);
+            this.panel9.TabIndex = 1;
+            // 
+            // label8
+            // 
+            this.label8.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label8.Location = new System.Drawing.Point(9, 5);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(77, 31);
+            this.label8.TabIndex = 11;
+            this.label8.Text = "Group";
+            // 
+            // btn_DisGroup
+            // 
+            this.btn_DisGroup.BackColor = System.Drawing.Color.Gainsboro;
+            this.btn_DisGroup.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_DisGroup.BackgroundImage")));
+            this.btn_DisGroup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_DisGroup.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btn_DisGroup.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btn_DisGroup.Location = new System.Drawing.Point(21, 92);
+            this.btn_DisGroup.Name = "btn_DisGroup";
+            this.btn_DisGroup.Size = new System.Drawing.Size(43, 47);
+            this.btn_DisGroup.TabIndex = 5;
+            this.btn_DisGroup.UseVisualStyleBackColor = false;
+            // 
+            // btn_Group
+            // 
+            this.btn_Group.BackColor = System.Drawing.Color.Gainsboro;
+            this.btn_Group.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_Group.BackgroundImage")));
+            this.btn_Group.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_Group.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btn_Group.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btn_Group.Location = new System.Drawing.Point(21, 39);
+            this.btn_Group.Name = "btn_Group";
+            this.btn_Group.Size = new System.Drawing.Size(43, 47);
+            this.btn_Group.TabIndex = 2;
+            this.btn_Group.UseVisualStyleBackColor = false;
+            this.btn_Group.Click += new System.EventHandler(this.btn_Group_Click);
             // 
             // Form1
             // 
@@ -788,6 +843,7 @@ namespace Lab7_OOP
             this.panel4.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
+            this.panel9.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -849,6 +905,10 @@ namespace Lab7_OOP
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.Button CEllipse;
         private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button btn_DisGroup;
+        private System.Windows.Forms.Button btn_Group;
         //public System.Windows.Forms.PictureBox pictureBox1;
     }
 }

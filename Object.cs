@@ -24,7 +24,7 @@ namespace Lab7_OOP
             e.Graphics.DrawLine(Brush.highlightPen, x, y, x + 1, y + 1);
         }
         public virtual bool mouseClick_on_Object(int x_, int y_) { return false; }
-        public void change_highlight()
+        public virtual void change_highlight()
         {
             if (highlighted)
                 highlighted = false;
@@ -34,7 +34,7 @@ namespace Lab7_OOP
         {
             return highlighted;
         }
-        public void set_color(Color new_color)
+        public virtual void set_color(Color new_color)
         {
             color = new_color;
         }
@@ -44,34 +44,34 @@ namespace Lab7_OOP
             return new CObject();
         }
         public virtual void resize(bool inc, int pbW, int pbH) { }
-        public virtual bool check_move(int move, int pbW, int pbH)
-        {
-            switch (move)
-            {
-                case 1:
-                    {
-                        if (x + 10 > pbW) x = pbW;
-                        return (x + 10 <= pbW);
-                    }
-                case -1:
-                    {
-                        if (x - 10 < 0) x = 0;
-                        return (x - 10 >= 0);
-                    }
-                case 2:
-                    {
-                        if (y - 10 < 0) y = 0;
-                        return (y - 10 >= 0);
-                    }
-                case -2:
-                    {
-                        if (y + 10 > pbH) y = pbH;
-                        return (y + 10 <= pbH);
-                    }
-                default: return false;
-            }
-        }
-        public virtual int check_move2(int move, int pbW, int pbH, int d)
+        //public virtual bool check_move(int move, int pbW, int pbH)
+        //{
+        //    switch (move)
+        //    {
+        //        case 1:
+        //            {
+        //                if (x + 10 > pbW) x = pbW;
+        //                return (x + 10 <= pbW);
+        //            }
+        //        case -1:
+        //            {
+        //                if (x - 10 < 0) x = 0;
+        //                return (x - 10 >= 0);
+        //            }
+        //        case 2:
+        //            {
+        //                if (y - 10 < 0) y = 0;
+        //                return (y - 10 >= 0);
+        //            }
+        //        case -2:
+        //            {
+        //                if (y + 10 > pbH) y = pbH;
+        //                return (y + 10 <= pbH);
+        //            }
+        //        default: return false;
+        //    }
+        //}
+        public virtual int check_move(int move, int pbW, int pbH, int d)
         {
             switch (move)
             {
@@ -82,15 +82,16 @@ namespace Lab7_OOP
                 default: return 0;
             }
         }
-        public virtual void move(int move, int pbW, int pbH)
+        public virtual void move(int move, int pbW, int pbH, int d)
         {
-            if (check_move(move, pbW, pbH) == true && move != 0)
+            d = check_move(move, pbW, pbH, d);
+            if (move != 0)
                 switch (move)
                 {
-                    case 1: { x += 10; break; }
-                    case -1: { x -= 10; break; }
-                    case 2: { y -= 10; break; }
-                    case -2: { y += 10; break; }
+                    case 1: { x += d; break; }
+                    case -1: { x -= d; break; }
+                    case 2: { y -= d; break; }
+                    case -2: { y += d; break; }
                     default: break;
                 }
         }
@@ -106,7 +107,7 @@ namespace Lab7_OOP
         {
             return y;
         }
-        public void set_x(int new_x) // переделать 
+        public void set_x(int new_x)
         {
             x = new_x;
         }
@@ -114,7 +115,7 @@ namespace Lab7_OOP
         {
             y = new_y;
         }
-        public void move_x(int dx) // переделать 
+        public void move_x(int dx)
         {
             x += dx;
         }
@@ -122,8 +123,9 @@ namespace Lab7_OOP
         {
             y += dy;
         }
+        public virtual int get_leftrightX(bool left) { return x; }
+        public virtual int get_updownY(bool up) { return y; }
     }
-
     public class CRectangle : CObject
     {
         protected int h = 50, w = 70;
@@ -151,31 +153,35 @@ namespace Lab7_OOP
         {
             return new CRectangle(x, y, color);
         }
-        public override bool check_move(int move, int pbW, int pbH)
+        public override int check_move(int move, int pbW, int pbH, int d)
         {
             switch (move)
             {
                 case 1:
                     {
-                        if (x + w / 2 + 10 > pbW) x = pbW - w / 2;
-                        return (x + w / 2 + 10 <= pbW);
+                        if (x + w / 2 + d > pbW)
+                            return pbW - (x + w / 2);
+                        else return d;
                     }
                 case -1:
                     {
-                        if (x - w / 2 - 10 < 0) x = w / 2;
-                        return (x - w / 2 - 10 >= 0);
+                        if (x - w / 2 - d < 0)
+                            return x - w / 2;
+                        else return d;
                     }
                 case 2:
                     {
-                        if (y - h / 2 - 10 < 0) y = h / 2;
-                        return (y - h / 2 - 10 >= 0);
+                        if (y - h / 2 - d < 0)
+                            return y - h / 2;
+                        else return d;
                     }
                 case -2:
                     {
-                        if (y + h / 2 + 10 > pbH) y = pbH - h / 2;
-                        return (y + h / 2 + 10 <= pbH);
+                        if (y + h / 2 + d > pbH)
+                            return pbH - (y + h / 2);
+                        else return d;
                     }
-                default: return base.check_move(move, pbW, pbH);
+                default: return 0;
             }
         }
         protected override int check_resize(bool inc, int pbW, int pbH)
@@ -211,7 +217,17 @@ namespace Lab7_OOP
                 else { w -= 10; h -= 10; }
             }
         }
-    };
+        public override int get_leftrightX(bool left) {
+            if (left == true)
+                return x - w / 2;
+            else return x + w / 2;
+        }
+        public override int get_updownY(bool up) {
+            if (up == true)
+                return y - h / 2;
+            else return y + h / 2;
+        }
+    }
     public class CSquare : CRectangle
     {
         public CSquare(int x, int y, Color col) : base(x, y, col)
@@ -389,10 +405,10 @@ namespace Lab7_OOP
             Region rgn = new Region(path);
             return (rgn.IsVisible(x_, y_) == true);
         }
-        public override void move(int move, int pbW, int pbH)
+        public override void move(int move, int pbW, int pbH, int dd)
         {
-            int d = check_move2(move, pbW, pbH, 10);
-            int d1 = Point1.check_move2(move, pbW, pbH, 10);
+            int d = check_move(move, pbW, pbH, 10);
+            int d1 = Point1.check_move(move, pbW, pbH, 10);
             if (d >= 0 && d1 >= 0)
             {
                 int d_ = Math.Min(d, d1);
@@ -452,62 +468,19 @@ namespace Lab7_OOP
             if (y == y0) { y = Math.Max(0, rect.Y); Point1.set_y(Math.Min(pbH, rect.Bottom)); }
             else { y = Math.Min(pbH, rect.Bottom); Point1.set_y(Math.Max(0, rect.Y)); }
         }
+        public override int get_leftrightX(bool left)
+        {
+            if (left == true)
+                return Math.Min(x, Point1.get_x());
+            else return Math.Max(x, Point1.get_x());
+        }
+        public override int get_updownY(bool up)
+        {
+            if (up == true)
+                return Math.Min(y, Point1.get_y());
+            else return Math.Max(y, Point1.get_y());
+        }
     }
-    //public class CPolygon: CObject
-    //{
-    //    private Point[] arrPoints;
-    //    private int count;
-    //    private int max_count;
-    //    public CPolygon(int maxcount)
-    //    {
-    //        max_count = maxcount;
-    //        arrPoints = new Point[max_count];
-    //        count = 0;
-    //        for (int i = 0; i < max_count; ++i)
-    //            arrPoints[i] = default;
-    //    }
-    //    ~CPolygon()
-    //    {
-    //        for (int i = 0; i < count; ++i)
-    //            arrPoints[i] = default;
-    //        count = 0;
-    //        arrPoints = null;
-    //    }
-    //    public bool addPoint(CObject p, Color new_color)
-    //    {
-    //        if (count > max_count)
-    //            return false;
-    //        color = new_color;
-    //        p.set_color(new_color);
-    //        arrPoints[count++] = new Point(p.get_x(),p.get_y());
-    //        return true;
-    //    }
-    //    public bool finish_build()
-    //    {
-    //        if (count >= 3) return true;
-    //        else return false;
-    //    }
-    //    public override void draw(PaintEventArgs e)
-    //    {
-    //        Brush.normPen.Color = color;
-    //        if (highlighted == false)
-    //            e.Graphics.DrawPolygon(Brush.normPen, arrPoints);
-    //        else e.Graphics.DrawPolygon(Brush.highlightPen, arrPoints);
-    //    }
-    //    public override bool mouseClick_on_Object(int x_, int y_)
-    //    {
-    //        GraphicsPath path = new GraphicsPath();
-    //        path.AddPolygon(arrPoints);
-    //        Region rgn = new Region(path);
-    //        if (rgn.IsVisible(x_, y_))
-    //            return true;
-    //        else return false;
-    //    }
-    //    public override void move(int move, int pbW, int pbH)
-    //    {
-    //        base.move(move, pbW, pbH);
-    //    }
-    //}
     public class CPolygon : CSquare
     {
         public CPolygon(int x, int y, Color color) : base(x, y, color) { }
@@ -537,6 +510,88 @@ namespace Lab7_OOP
         public override CObject new_obj(int x, int y, Color color)
         {
             return new CPolygon(x, y, color);
+        }
+    }
+    public class CGroup: CRectangle
+    {
+        int max_count;
+        int count;
+        CObject[] objects;
+        public CGroup():base(0,0,Color.Black)
+        {
+            w = 0;
+            h = 0;
+            max_count = 1;
+            count = 0;
+            objects = new CObject[max_count];
+            for (int i = 0; i < max_count; ++i)
+                objects[i] = null;
+        }
+        public void addObject(CObject new_obj)
+        {
+            if (count == max_count)
+            {
+                max_count = max_count * 2;
+                CObject[] new_objects = new CObject[max_count];
+                for (int i = 0; i < count; ++i)
+                    new_objects[i] = objects[i];
+                objects = new_objects;
+            }
+            objects[count] = new_obj;
+            count++;
+        }
+        private Rectangle get_rect()
+        {
+            int x0 = objects[0].get_leftrightX(true), y0 = objects[0].get_updownY(true);
+            int x1 = 0, y1 = 0;
+            for (int i=0; i<count; ++i)
+            {
+                int tmp_xy = objects[i].get_leftrightX(true);
+                if (tmp_xy < x0) x0 = tmp_xy;
+                tmp_xy = objects[i].get_leftrightX(false);
+                if (tmp_xy > x1) x1 = tmp_xy;
+                tmp_xy = objects[i].get_updownY(true);
+                if (tmp_xy < y0) y0 = tmp_xy;
+                tmp_xy = objects[i].get_updownY(false);
+                if (tmp_xy > y1) y1 = tmp_xy;
+            }
+            w = x1 - x0; h = y1 - y0;
+            x = x0 + w / 2; y = y0 + h / 2;
+        return new Rectangle(x0, y0, w, h);
+        }
+        public override void move(int move, int pbW, int pbH, int d)
+        {
+            d = check_move(move, pbW, pbH, d);
+            for (int i = 0; i < count; ++i)
+            {
+                objects[i].move(move, pbW, pbH, d);
+            }
+        }
+        public override void draw(PaintEventArgs e)
+        {
+            // рисуем объекты внутри группы
+            for (int i = 0; i < count; ++i)
+                objects[i].draw(e);
+            // рисуем рамку
+            Rectangle rect = get_rect();
+            Brush.normPen.Color = color;
+            Brush.normPen.DashStyle = new DashStyle();
+            Brush.highlightPen.DashStyle = new DashStyle();
+            if (highlighted == false)
+                e.Graphics.DrawRectangle(Brush.normPen, rect);
+            else e.Graphics.DrawRectangle(Brush.highlightPen, rect);
+        }
+        public override void change_highlight()
+        {
+            base.change_highlight();
+            for (int i = 0; i < count; ++i)
+                objects[i].change_highlight();
+        }
+        public override void set_color(Color new_color)
+        {
+            base.set_color(new_color);
+            for (int i = 0; i < count; i++)
+                objects[i].set_color(new_color);
         }
     }
 }

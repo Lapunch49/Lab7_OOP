@@ -29,6 +29,7 @@ namespace Lab7_OOP
             new CPolygon(0,0,c)
         };
         string cur_select = "CCircle"; // текущий выбор фигуры, которая будет создаваться при нажатии на пустое место 
+        CGroup cur_group; // текущая выбранная группа
         CObject line_st = null; // точка - начало отрезка
         public int mouseX = 0;
         public int mouseY = 0;
@@ -89,7 +90,7 @@ namespace Lab7_OOP
             {
                 for (int i = 0; i < storObj.get_count(); ++i)
                     if (storObj.get_el(i).get_highlighted() == true)
-                        storObj.get_el(i).move(move, pictureBox1.Width, pictureBox1.Height);
+                        storObj.get_el(i).move(move, pictureBox1.Width, pictureBox1.Height, 10);
             }
 
             pictureBox1.Invalidate();
@@ -164,8 +165,7 @@ namespace Lab7_OOP
                         storObj.add(newObj);
                         ind = storObj.get_count() - 1;
                     }
-
-                    //если не дорисовываем отрезок, проверяем ctrl
+                    // если не дорисовываем отрезок, проверяем ctrl
                     // если ctrl не зажат - убираем остальные выделения
                     else if (ctrlPress != true)
                     {
@@ -244,6 +244,26 @@ namespace Lab7_OOP
             mouseY = e.Y;
             if (cur_select == "CLine" && line_st != null)
                 pictureBox1.Invalidate();
+        }
+        private void btn_Group_Click(object sender, EventArgs e)
+        {   // добавляем все выделенные объекты в новую группу,
+            // удаляем их из хранилища, группу добавляем в хранилище
+            CGroup new_group = new CGroup();
+            int i = 0;
+            while (i < storObj.get_count())
+            {
+                if (storObj.get_el(i).get_highlighted() == true)
+                {
+                    storObj.get_el(i).change_highlight();
+                    new_group.addObject(storObj.get_el(i));
+                    storObj.del(i);
+                }
+                else i++;
+            }
+            storObj.add(new_group);
+            // объекты внутри группы и группа(рамка) выделяются
+            storObj.get_el(i).change_highlight();
+            pictureBox1.Invalidate();
         }
     }
     public class Brush
