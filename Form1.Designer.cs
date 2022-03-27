@@ -106,11 +106,13 @@ namespace Lab7_OOP
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(685, 635);
+            this.pictureBox1.Size = new System.Drawing.Size(619, 635);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
@@ -146,7 +148,7 @@ namespace Lab7_OOP
             // btn_clear
             // 
             this.btn_clear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btn_clear.Location = new System.Drawing.Point(29, 10);
+            this.btn_clear.Location = new System.Drawing.Point(29, 4);
             this.btn_clear.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btn_clear.Name = "btn_clear";
             this.btn_clear.Size = new System.Drawing.Size(107, 31);
@@ -770,21 +772,21 @@ namespace Lab7_OOP
             // 
             // panel9
             // 
-            this.panel9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel9.Controls.Add(this.label8);
             this.panel9.Controls.Add(this.btn_DisGroup);
             this.panel9.Controls.Add(this.btn_Group);
-            this.panel9.Location = new System.Drawing.Point(598, 0);
+            this.panel9.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel9.Location = new System.Drawing.Point(620, 0);
             this.panel9.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(87, 199);
+            this.panel9.Size = new System.Drawing.Size(65, 635);
             this.panel9.TabIndex = 1;
             // 
             // label8
             // 
             this.label8.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label8.Location = new System.Drawing.Point(9, 5);
+            this.label8.Location = new System.Drawing.Point(-1, 5);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(77, 31);
             this.label8.TabIndex = 11;
@@ -797,7 +799,7 @@ namespace Lab7_OOP
             this.btn_DisGroup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_DisGroup.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btn_DisGroup.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btn_DisGroup.Location = new System.Drawing.Point(21, 92);
+            this.btn_DisGroup.Location = new System.Drawing.Point(9, 92);
             this.btn_DisGroup.Name = "btn_DisGroup";
             this.btn_DisGroup.Size = new System.Drawing.Size(43, 47);
             this.btn_DisGroup.TabIndex = 5;
@@ -811,7 +813,7 @@ namespace Lab7_OOP
             this.btn_Group.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_Group.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btn_Group.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btn_Group.Location = new System.Drawing.Point(21, 39);
+            this.btn_Group.Location = new System.Drawing.Point(9, 39);
             this.btn_Group.Name = "btn_Group";
             this.btn_Group.Size = new System.Drawing.Size(43, 47);
             this.btn_Group.TabIndex = 2;

@@ -264,16 +264,17 @@ namespace Lab7_OOP
             storObj.get_el(i).change_highlight();
             pictureBox1.Invalidate();
         }
-
         private void btn_DisGroup_Click(object sender, EventArgs e)
         {   // из всех выделенных групп переносим объекты в хранилище и удаляем группы из хранилища
-            for (int i = 0; i < storObj.get_count(); ++i)
+            // цикл проходит задом наперед на случай, если группа содержала группу, а мы не хотим 
+            // разгруппировывать внутр. группу
+            for (int i = storObj.get_count()-1; i >=0; --i)
                 if (storObj.get_el(i).get_highlighted() == true && storObj.get_el(i).classname() == "CGroup")
                 {
                     for (int j = 0; j < (storObj.get_el(i) as CGroup).get_count(); ++j)
                         storObj.add((storObj.get_el(i) as CGroup).get_el(j));
                     storObj.del(i);
-                    i--;
+                    i++;
                 }
             pictureBox1.Invalidate();
         }

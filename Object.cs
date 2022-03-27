@@ -385,6 +385,7 @@ namespace Lab7_OOP
             if (d >= 0 && d1 >= 0)
             {
                 int d_ = Math.Min(d, d1);
+                d_ = Math.Min(d_, dd);
                 switch (move)
                 {
                     case 1: { x += d_; Point1.move_x(d_); break; }
