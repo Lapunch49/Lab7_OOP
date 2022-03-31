@@ -106,18 +106,24 @@ namespace Lab7_OOP
         public virtual int get_updownY(bool up) { return y; }
         public virtual void save(StreamWriter file)
         {
+            save_xy(file);
+            //WriteLine("%s", color);
+        }
+        public void save_xy(StreamWriter file)
+        {
             file.WriteLine("x, y:");
             file.WriteLine(x.ToString());
             file.WriteLine(y.ToString());
-            //.WriteLine("%s", color);
         }
         public virtual void load(StreamReader file)
+        {
+            load_xy(file);
+        }
+        public void load_xy(StreamReader file)
         {
             file.ReadLine();
             x = Int32.Parse(file.ReadLine());
             y = Int32.Parse(file.ReadLine());
-            //color = file.ReadLine().ToCharArray() as Color;
-            //highlighted = Int32.Parse(file.ReadLine());
         }
     }
     public class CRectangle : CObject
@@ -224,13 +230,21 @@ namespace Lab7_OOP
         {
             file.WriteLine('R');
             base.save(file);
-            file.WriteLine("width, hight:");
-            file.WriteLine(w.ToString());
-            file.WriteLine(h.ToString());
+            save_wh(file);
         }
         public override void load(StreamReader file)
         {
             base.load(file);
+            load_wh(file);
+        }
+        public void save_wh(StreamWriter file)
+        {
+            file.WriteLine("width, hight:");
+            file.WriteLine(w.ToString());
+            file.WriteLine(h.ToString());
+        }
+        public void load_wh(StreamReader file)
+        {
             file.ReadLine();
             w = Int32.Parse(file.ReadLine());
             h = Int32.Parse(file.ReadLine());
@@ -250,17 +264,13 @@ namespace Lab7_OOP
         public override void save(StreamWriter file)
         {
             file.WriteLine('S');
-            file.WriteLine("x, y:");
-            file.WriteLine(x.ToString());
-            file.WriteLine(y.ToString());
+            save_xy(file);
             file.WriteLine("length:");
             file.WriteLine(w.ToString());
         }
         public override void load(StreamReader file)
         {
-            file.ReadLine();
-            x = Int32.Parse(file.ReadLine());
-            y = Int32.Parse(file.ReadLine());
+            load_xy(file);
             file.ReadLine();
             w = Int32.Parse(file.ReadLine());
             h = w;
@@ -293,21 +303,13 @@ namespace Lab7_OOP
         public override void save(StreamWriter file)
         {
             file.WriteLine('E');
-            file.WriteLine("x, y:");
-            file.WriteLine(x.ToString());
-            file.WriteLine(y.ToString());
-            file.WriteLine("width, hight:");
-            file.WriteLine(w.ToString());
-            file.WriteLine(h.ToString());
+            save_xy(file);
+            save_wh(file);
         }
         public override void load(StreamReader file)
         {
-            file.ReadLine();
-            x = Int32.Parse(file.ReadLine());
-            y = Int32.Parse(file.ReadLine());
-            file.ReadLine();
-            w = Int32.Parse(file.ReadLine());
-            h = Int32.Parse(file.ReadLine());
+            load_xy(file);
+            load_wh(file);
         }
     }
     public class CCircle : CEllipse
@@ -320,6 +322,20 @@ namespace Lab7_OOP
         public override CObject new_obj(int x, int y, Color color)
         {
             return new CCircle(x, y, color);
+        }
+        public override void save(StreamWriter file)
+        {
+            file.WriteLine('C');
+            save_xy(file);
+            file.WriteLine("radius:");
+            file.WriteLine(w.ToString());
+        }
+        public override void load(StreamReader file)
+        {
+            load_xy(file);
+            file.ReadLine();
+            w = Int32.Parse(file.ReadLine());
+            h = w;
         }
     };
     public class CTriangle : CSquare
@@ -346,6 +362,20 @@ namespace Lab7_OOP
         public override CObject new_obj(int x, int y, Color color)
         {
             return new CTriangle(x, y, color);
+        }
+        public override void save(StreamWriter file)
+        {
+            file.WriteLine('T');
+            save_xy(file);
+            file.WriteLine("length:");
+            file.WriteLine(w.ToString());
+        }
+        public override void load(StreamReader file)
+        {
+            load_xy(file);
+            file.ReadLine();
+            w = Int32.Parse(file.ReadLine());
+            h = w;
         }
     };
     public class CRhomb : CRectangle
@@ -391,6 +421,17 @@ namespace Lab7_OOP
         {
             return new CRhomb(x, y, color);
         }
+        public override void save(StreamWriter file)
+        {
+            file.WriteLine('r');
+            save_xy(file);
+            save_wh(file);
+        }
+        public override void load(StreamReader file)
+        {
+            load_xy(file);
+            load_wh(file);
+        }
     }
     public class CTrapeze : CRectangle
     {
@@ -425,13 +466,26 @@ namespace Lab7_OOP
         {
             return new CTrapeze(x, y, color);
         }
+        public override void save(StreamWriter file)
+        {
+            file.WriteLine('t');
+            save_xy(file);
+            save_wh(file);
+        }
+        public override void load(StreamReader file)
+        {
+            load_xy(file);
+            load_wh(file);
+        }
     }
     public class CLine : CObject
     {
         private CObject Point1;
         public CLine(CObject point_st, int x, int y, Color color) : base(x, y, color)
         {
-            Point1 = point_st;
+            if (point_st != null)
+                Point1 = point_st;
+            else Point1 = new CObject(0, 0, color);
             Point1.set_color(color);
         }
         public override string classname() { return "CLine"; }
@@ -531,9 +585,11 @@ namespace Lab7_OOP
         }
         public override void save(StreamWriter file)
         {
+            file.WriteLine('L');
             base.save(file);
             file.WriteLine("x1, y1:");
-            file.WriteLine(Point1.get_x().ToString(), "\n", Point1.get_y().ToString());
+            file.WriteLine(Point1.get_x().ToString());
+            file.WriteLine(Point1.get_y().ToString());
         }
         public override void load(StreamReader file)
         {
@@ -572,6 +628,20 @@ namespace Lab7_OOP
         public override CObject new_obj(int x, int y, Color color)
         {
             return new CPolygon(x, y, color);
+        }
+        public override void save(StreamWriter file)
+        {
+            file.WriteLine('P');
+            save_xy(file);
+            file.WriteLine("length:");
+            file.WriteLine(w.ToString());
+        }
+        public override void load(StreamReader file)
+        {
+            load_xy(file);
+            file.ReadLine();
+            w = Int32.Parse(file.ReadLine());
+            h = w;
         }
     }
     public class CGroup: CRectangle
@@ -684,5 +754,43 @@ namespace Lab7_OOP
             else return null;
         }
         public override string classname() { return "CGroup"; }
+        public CObject createObj(char code)
+        {
+            switch (code)
+            {
+                case 'C': return new CCircle(0, 0, Form1.c);
+                case 'T': return new CTriangle(0, 0, Form1.c);
+                case 'R': return new CRectangle(0, 0, Form1.c);
+                case 'S': return new CSquare(0, 0, Form1.c);
+                case 'E': return new CEllipse(0, 0, Form1.c);
+                case 'r': return new CRhomb(0, 0, Form1.c);
+                case 't': return new CTrapeze(0, 0, Form1.c);
+                case 'P': return new CPolygon(0, 0, Form1.c);
+                case 'L': return new CLine(default, 0, 0, Form1.c);
+                case 'G': return new CGroup();
+                default: return null;
+            }
+        }
+        public override void save(StreamWriter file)
+        {
+            file.WriteLine('G');
+            file.WriteLine(count.ToString());
+            for (int i=0; i<count; ++i)
+            {
+                objects[i].save(file);
+            }
+        }
+        public override void load(StreamReader file)
+        {
+            int new_count = Int32.Parse(file.ReadLine());
+            char code;
+            for (int i = 0; i < new_count; ++i)
+            {
+                code = Convert.ToChar(file.ReadLine());
+                CObject new_obj = createObj(code);
+                new_obj.load(file);
+                addObject(new_obj);
+            }
+        }
     }
 }
