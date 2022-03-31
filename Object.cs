@@ -4,10 +4,16 @@ using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using System.IO;
 
 namespace Lab7_OOP
 {
-    public class CObject
+    interface IObject
+    {
+        public void save(StreamWriter file);
+        public void load(StreamReader file);
+    }
+    public class CObject: IObject
     {
         protected bool highlighted = false;
         protected Color color;
@@ -98,6 +104,21 @@ namespace Lab7_OOP
         }
         public virtual int get_leftrightX(bool left) { return x; }
         public virtual int get_updownY(bool up) { return y; }
+        public virtual void save(StreamWriter file)
+        {
+            file.WriteLine("x, y:");
+            file.WriteLine(x.ToString());
+            file.WriteLine(y.ToString());
+            //.WriteLine("%s", color);
+        }
+        public virtual void load(StreamReader file)
+        {
+            file.ReadLine();
+            x = Int32.Parse(file.ReadLine());
+            y = Int32.Parse(file.ReadLine());
+            //color = file.ReadLine().ToCharArray() as Color;
+            //highlighted = Int32.Parse(file.ReadLine());
+        }
     }
     public class CRectangle : CObject
     {
@@ -199,6 +220,21 @@ namespace Lab7_OOP
                 return y - h / 2;
             else return y + h / 2;
         }
+        public override void save(StreamWriter file)
+        {
+            file.WriteLine('R');
+            base.save(file);
+            file.WriteLine("width, hight:");
+            file.WriteLine(w.ToString());
+            file.WriteLine(h.ToString());
+        }
+        public override void load(StreamReader file)
+        {
+            base.load(file);
+            file.ReadLine();
+            w = Int32.Parse(file.ReadLine());
+            h = Int32.Parse(file.ReadLine());
+        }
     }
     public class CSquare : CRectangle
     {
@@ -210,6 +246,24 @@ namespace Lab7_OOP
         public override CObject new_obj(int x, int y, Color color)
         {
             return new CSquare(x, y, color);
+        }
+        public override void save(StreamWriter file)
+        {
+            file.WriteLine('S');
+            file.WriteLine("x, y:");
+            file.WriteLine(x.ToString());
+            file.WriteLine(y.ToString());
+            file.WriteLine("length:");
+            file.WriteLine(w.ToString());
+        }
+        public override void load(StreamReader file)
+        {
+            file.ReadLine();
+            x = Int32.Parse(file.ReadLine());
+            y = Int32.Parse(file.ReadLine());
+            file.ReadLine();
+            w = Int32.Parse(file.ReadLine());
+            h = w;
         }
     }
     public class CEllipse : CRectangle
@@ -235,6 +289,25 @@ namespace Lab7_OOP
         public override CObject new_obj(int x, int y, Color color)
         {
             return new CEllipse(x, y, color);
+        }
+        public override void save(StreamWriter file)
+        {
+            file.WriteLine('E');
+            file.WriteLine("x, y:");
+            file.WriteLine(x.ToString());
+            file.WriteLine(y.ToString());
+            file.WriteLine("width, hight:");
+            file.WriteLine(w.ToString());
+            file.WriteLine(h.ToString());
+        }
+        public override void load(StreamReader file)
+        {
+            file.ReadLine();
+            x = Int32.Parse(file.ReadLine());
+            y = Int32.Parse(file.ReadLine());
+            file.ReadLine();
+            w = Int32.Parse(file.ReadLine());
+            h = Int32.Parse(file.ReadLine());
         }
     }
     public class CCircle : CEllipse
@@ -456,6 +529,19 @@ namespace Lab7_OOP
                 return Math.Min(y, Point1.get_y());
             else return Math.Max(y, Point1.get_y());
         }
+        public override void save(StreamWriter file)
+        {
+            base.save(file);
+            file.WriteLine("x1, y1:");
+            file.WriteLine(Point1.get_x().ToString(), "\n", Point1.get_y().ToString());
+        }
+        public override void load(StreamReader file)
+        {
+            base.load(file);
+            file.ReadLine();
+            Point1.set_x(Int32.Parse(file.ReadLine()));
+            Point1.set_y(Int32.Parse(file.ReadLine()));
+        }
     }
     public class CPolygon : CSquare
     {
@@ -518,25 +604,29 @@ namespace Lab7_OOP
         }
         private Rectangle get_rect()
         {
-            // находим самые крайние координаты - углы прямоугольника-рамки
-            int x0 = objects[0].get_leftrightX(true), y0 = objects[0].get_updownY(true);
-            int x1 = 0, y1 = 0;
-            for (int i=0; i<count; ++i)
+            if (objects[0] != null)
             {
-                int tmp_xy = objects[i].get_leftrightX(true);
-                if (tmp_xy < x0) x0 = tmp_xy;
-                tmp_xy = objects[i].get_leftrightX(false);
-                if (tmp_xy > x1) x1 = tmp_xy;
-                tmp_xy = objects[i].get_updownY(true);
-                if (tmp_xy < y0) y0 = tmp_xy;
-                tmp_xy = objects[i].get_updownY(false);
-                if (tmp_xy > y1) y1 = tmp_xy;
-            }
-            // обновляем значения свойств x,y,w,h
-            w = x1 - x0; h = y1 - y0;
-            x = x0 + w / 2; y = y0 + h / 2;
+                // находим самые крайние координаты - углы прямоугольника-рамки
+                int x0 = objects[0].get_leftrightX(true), y0 = objects[0].get_updownY(true);
+                int x1 = 0, y1 = 0;
+                for (int i = 0; i < count; ++i)
+                {
+                    int tmp_xy = objects[i].get_leftrightX(true);
+                    if (tmp_xy < x0) x0 = tmp_xy;
+                    tmp_xy = objects[i].get_leftrightX(false);
+                    if (tmp_xy > x1) x1 = tmp_xy;
+                    tmp_xy = objects[i].get_updownY(true);
+                    if (tmp_xy < y0) y0 = tmp_xy;
+                    tmp_xy = objects[i].get_updownY(false);
+                    if (tmp_xy > y1) y1 = tmp_xy;
+                }
+                // обновляем значения свойств x,y,w,h
+                w = x1 - x0; h = y1 - y0;
+                x = x0 + w / 2; y = y0 + h / 2;
 
-        return new Rectangle(x0, y0, w, h);
+                return new Rectangle(x0, y0, w, h);
+            }
+            else return default;
         }
         public override void move(int move, int pbW, int pbH, int d)
         {
@@ -561,15 +651,15 @@ namespace Lab7_OOP
         }
         public override void resize(bool inc, int pbW, int pbH, int d)
         {   // находим возможную для всей группы величину увел/умен
-            //int tmp_d;
-            //for (int i = 0; i < count; ++i)
-            //{
-            //    tmp_d = objects[i].check_resize(inc, pbW, pbH);
-            //    d = Math.Min(tmp_d, d);
-            //}
+            int tmp_d;
+            for (int i = 0; i < count; ++i)
+            {
+                tmp_d = objects[i].check_resize(inc, pbW, pbH);
+                d = Math.Min(tmp_d, d);
+            }
             // поочередно изменяем размер каждого объекта внутри группы
             for (int i = 0; i < count; ++i)
-                objects[i].resize(inc, pbW, pbH, 10);
+                objects[i].resize(inc, pbW, pbH, d);
         }
         public override void change_highlight()
         {

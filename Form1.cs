@@ -16,17 +16,17 @@ namespace Lab7_OOP
     {
         public bool ctrlPress = false; // для выделения нескольких объектов
         public bool shiftPress = false; // для увеличения размера (shift +)
-        static Color c = Color.White;
-        Storage storObj = new Storage(10);
-        CObject[] ObjList =
-            {new CCircle(0,0,c),
-            new CTriangle(0,0,c),
-            new CRectangle(0,0, c),
-            new CSquare(0,0, c),
-            new CEllipse(0,0,c),
-            new CRhomb(0,0,c),
-            new CTrapeze(0,0,c),
-            new CPolygon(0,0,c)
+        public static Color c = Color.LightPink;
+        Factory storObj = new Factory();
+        public static CObject[] ObjList =
+            {new CCircle(0,0,c), //0
+            new CTriangle(0,0,c), //1
+            new CRectangle(0,0, c), //2
+            new CSquare(0,0, c), //3
+            new CEllipse(0,0,c), //4
+            new CRhomb(0,0,c), //5
+            new CTrapeze(0,0,c), //6
+            new CPolygon(0,0,c) //7
         };
         string cur_select = "CCircle"; // текущий выбор фигуры, которая будет создаваться при нажатии на пустое место 
         CObject line_st = null; // точка - начало отрезка
@@ -269,13 +269,25 @@ namespace Lab7_OOP
             // цикл проходит задом наперед на случай, если группа содержала группу, а мы не хотим 
             // разгруппировывать внутр. группу
             for (int i = storObj.get_count()-1; i >=0; --i)
-                if (storObj.get_el(i).get_highlighted() == true && storObj.get_el(i).classname() == "CGroup")
+                if (storObj.get_el(i) != null && storObj.get_el(i).get_highlighted() == true && storObj.get_el(i).classname() == "CGroup")
                 {
                     for (int j = 0; j < (storObj.get_el(i) as CGroup).get_count(); ++j)
                         storObj.add((storObj.get_el(i) as CGroup).get_el(j));
                     storObj.del(i);
                     i++;
                 }
+            pictureBox1.Invalidate();
+        }
+
+        private void btn_save_Click(object sender, EventArgs e)
+        {
+            storObj.saveObjects();
+        }
+
+        private void btn_load_Click(object sender, EventArgs e)
+        {
+            btn_clear_Click(sender, e);
+            storObj.loadObjects();
             pictureBox1.Invalidate();
         }
     }

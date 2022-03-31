@@ -6,7 +6,7 @@ namespace Lab7_OOP
 {
     public class Storage
     {
-        private int n, k; // размер и кол-во эл-в
+        protected int n, k; // размер и кол-во эл-в
         public CObject[] st;
         public Storage()
         {

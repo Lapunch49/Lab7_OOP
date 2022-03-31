@@ -32,8 +32,6 @@ namespace Lab7_OOP
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.btn_clear = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
@@ -82,15 +80,22 @@ namespace Lab7_OOP
             this.CSquare = new System.Windows.Forms.Button();
             this.CTriangle = new System.Windows.Forms.Button();
             this.CCircle = new System.Windows.Forms.Button();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.label11 = new System.Windows.Forms.Label();
+            this.btn_load = new System.Windows.Forms.Button();
+            this.btn_clear = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.btn_save = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.panel8 = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
-            this.label8 = new System.Windows.Forms.Label();
+            this.panel10 = new System.Windows.Forms.Panel();
             this.btn_DisGroup = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
             this.btn_Group = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
-            this.panel7.SuspendLayout();
             this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
@@ -100,8 +105,10 @@ namespace Lab7_OOP
             this.panel5.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.panel7.SuspendLayout();
             this.panel8.SuspendLayout();
             this.panel9.SuspendLayout();
+            this.panel10.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -112,7 +119,7 @@ namespace Lab7_OOP
             this.pictureBox1.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(619, 635);
+            this.pictureBox1.Size = new System.Drawing.Size(619, 579);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
@@ -122,7 +129,6 @@ namespace Lab7_OOP
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.panel7);
             this.panel1.Controls.Add(this.panel6);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.panel4);
@@ -131,31 +137,8 @@ namespace Lab7_OOP
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(168, 635);
+            this.panel1.Size = new System.Drawing.Size(168, 579);
             this.panel1.TabIndex = 1;
-            // 
-            // panel7
-            // 
-            this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel7.Controls.Add(this.btn_clear);
-            this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(0, 577);
-            this.panel7.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(166, 56);
-            this.panel7.TabIndex = 17;
-            // 
-            // btn_clear
-            // 
-            this.btn_clear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btn_clear.Location = new System.Drawing.Point(29, 4);
-            this.btn_clear.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btn_clear.Name = "btn_clear";
-            this.btn_clear.Size = new System.Drawing.Size(107, 31);
-            this.btn_clear.TabIndex = 16;
-            this.btn_clear.Text = "Clear";
-            this.btn_clear.UseVisualStyleBackColor = true;
-            this.btn_clear.Click += new System.EventHandler(this.btn_clear_Click);
             // 
             // panel6
             // 
@@ -759,6 +742,82 @@ namespace Lab7_OOP
             this.CCircle.UseVisualStyleBackColor = false;
             this.CCircle.Click += new System.EventHandler(this.btn_shape_Click);
             // 
+            // panel7
+            // 
+            this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel7.Controls.Add(this.label11);
+            this.panel7.Controls.Add(this.btn_load);
+            this.panel7.Controls.Add(this.btn_clear);
+            this.panel7.Controls.Add(this.label9);
+            this.panel7.Controls.Add(this.label10);
+            this.panel7.Controls.Add(this.btn_save);
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel7.Location = new System.Drawing.Point(0, 157);
+            this.panel7.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(63, 229);
+            this.panel7.TabIndex = 17;
+            // 
+            // label11
+            // 
+            this.label11.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label11.Location = new System.Drawing.Point(0, 78);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(77, 31);
+            this.label11.TabIndex = 21;
+            this.label11.Text = "Load";
+            // 
+            // btn_load
+            // 
+            this.btn_load.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btn_load.Location = new System.Drawing.Point(11, 114);
+            this.btn_load.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btn_load.Name = "btn_load";
+            this.btn_load.Size = new System.Drawing.Size(31, 29);
+            this.btn_load.TabIndex = 20;
+            this.btn_load.UseVisualStyleBackColor = true;
+            this.btn_load.Click += new System.EventHandler(this.btn_load_Click);
+            // 
+            // btn_clear
+            // 
+            this.btn_clear.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btn_clear.Location = new System.Drawing.Point(11, 188);
+            this.btn_clear.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btn_clear.Name = "btn_clear";
+            this.btn_clear.Size = new System.Drawing.Size(31, 30);
+            this.btn_clear.TabIndex = 16;
+            this.btn_clear.UseVisualStyleBackColor = true;
+            this.btn_clear.Click += new System.EventHandler(this.btn_clear_Click);
+            // 
+            // label9
+            // 
+            this.label9.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label9.Location = new System.Drawing.Point(1, 152);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(77, 32);
+            this.label9.TabIndex = 17;
+            this.label9.Text = "Clear";
+            // 
+            // label10
+            // 
+            this.label10.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label10.Location = new System.Drawing.Point(0, 4);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(77, 31);
+            this.label10.TabIndex = 19;
+            this.label10.Text = "Save";
+            // 
+            // btn_save
+            // 
+            this.btn_save.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btn_save.Location = new System.Drawing.Point(11, 39);
+            this.btn_save.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btn_save.Name = "btn_save";
+            this.btn_save.Size = new System.Drawing.Size(31, 29);
+            this.btn_save.TabIndex = 18;
+            this.btn_save.UseVisualStyleBackColor = true;
+            this.btn_save.Click += new System.EventHandler(this.btn_save_Click);
+            // 
             // panel8
             // 
             this.panel8.Controls.Add(this.panel9);
@@ -767,30 +826,32 @@ namespace Lab7_OOP
             this.panel8.Location = new System.Drawing.Point(168, 0);
             this.panel8.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(685, 635);
+            this.panel8.Size = new System.Drawing.Size(685, 579);
             this.panel8.TabIndex = 2;
             // 
             // panel9
             // 
             this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel9.Controls.Add(this.label8);
-            this.panel9.Controls.Add(this.btn_DisGroup);
-            this.panel9.Controls.Add(this.btn_Group);
+            this.panel9.Controls.Add(this.panel7);
+            this.panel9.Controls.Add(this.panel10);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel9.Location = new System.Drawing.Point(620, 0);
             this.panel9.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(65, 635);
+            this.panel9.Size = new System.Drawing.Size(65, 579);
             this.panel9.TabIndex = 1;
             // 
-            // label8
+            // panel10
             // 
-            this.label8.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label8.Location = new System.Drawing.Point(-1, 5);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(77, 31);
-            this.label8.TabIndex = 11;
-            this.label8.Text = "Group";
+            this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel10.Controls.Add(this.btn_DisGroup);
+            this.panel10.Controls.Add(this.label8);
+            this.panel10.Controls.Add(this.btn_Group);
+            this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel10.Location = new System.Drawing.Point(0, 0);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(63, 157);
+            this.panel10.TabIndex = 12;
             // 
             // btn_DisGroup
             // 
@@ -799,12 +860,21 @@ namespace Lab7_OOP
             this.btn_DisGroup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_DisGroup.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btn_DisGroup.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btn_DisGroup.Location = new System.Drawing.Point(9, 92);
+            this.btn_DisGroup.Location = new System.Drawing.Point(8, 92);
             this.btn_DisGroup.Name = "btn_DisGroup";
             this.btn_DisGroup.Size = new System.Drawing.Size(43, 47);
             this.btn_DisGroup.TabIndex = 5;
             this.btn_DisGroup.UseVisualStyleBackColor = false;
             this.btn_DisGroup.Click += new System.EventHandler(this.btn_DisGroup_Click);
+            // 
+            // label8
+            // 
+            this.label8.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label8.Location = new System.Drawing.Point(-2, 7);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(77, 31);
+            this.label8.TabIndex = 11;
+            this.label8.Text = "Group";
             // 
             // btn_Group
             // 
@@ -813,7 +883,7 @@ namespace Lab7_OOP
             this.btn_Group.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_Group.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btn_Group.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btn_Group.Location = new System.Drawing.Point(9, 39);
+            this.btn_Group.Location = new System.Drawing.Point(8, 39);
             this.btn_Group.Name = "btn_Group";
             this.btn_Group.Size = new System.Drawing.Size(43, 47);
             this.btn_Group.TabIndex = 2;
@@ -825,7 +895,7 @@ namespace Lab7_OOP
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(853, 635);
+            this.ClientSize = new System.Drawing.Size(853, 579);
             this.Controls.Add(this.panel8);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -835,7 +905,6 @@ namespace Lab7_OOP
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
-            this.panel7.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
@@ -845,8 +914,10 @@ namespace Lab7_OOP
             this.panel5.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            this.panel7.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
             this.panel9.ResumeLayout(false);
+            this.panel10.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -911,6 +982,12 @@ namespace Lab7_OOP
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button btn_DisGroup;
         private System.Windows.Forms.Button btn_Group;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button btn_load;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button btn_save;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Panel panel10;
         //public System.Windows.Forms.PictureBox pictureBox1;
     }
 }
