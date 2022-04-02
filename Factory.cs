@@ -43,8 +43,8 @@ namespace Lab7_OOP
                 code = Convert.ToChar(file.ReadLine());
                 CObject new_obj = createObj(code);
                 new_obj.load(file);
+                //if (new_obj != null)
                 add(new_obj);
-
             }
             file.Close();
         }
