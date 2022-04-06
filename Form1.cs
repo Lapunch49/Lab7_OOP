@@ -47,19 +47,14 @@ namespace Lab7_OOP
             // удаление объектов
             if (e.KeyCode == Keys.Delete) // выделенные объекты удалятся из хранилища, и произойдет перерисовка
             {
-                for (int i = 0; i < storObj.get_count(); ++i)
-                {
-                    if (storObj.get_el(i).get_highlighted() == true)
-                    {
-                        storObj.del(i);
-                        i--;
-                    }
-                }
+                storObj.del_highlighted_objects();
             }
+
 
             // увеличение-уменьшение размера объектов 
             bool changeSize = false;
             bool size_delt = false;
+
             // увеличение размера объектов 
             if (e.KeyCode == Keys.Oemplus && shiftPress == true)
             {
@@ -69,11 +64,12 @@ namespace Lab7_OOP
             // уменьшение размера объектов
             if (e.KeyCode == Keys.OemMinus)
                 changeSize = true;
+
             // применяем изменения к объектам
             if (changeSize == true)
-                for (int i = 0; i < storObj.get_count(); ++i)
-                    if (storObj.get_el(i).get_highlighted() == true)
-                        storObj.get_el(i).resize(size_delt, pictureBox1.Width, pictureBox1.Height,10);
+                storObj.resize_highlighted_objects(size_delt, pictureBox1.Width, pictureBox1.Height, 10);
+
+
 
             // передвижение объектов вправо-влево-вверх-вниз
             int move = 0;
@@ -87,9 +83,7 @@ namespace Lab7_OOP
             }
             if (move != 0)
             {
-                for (int i = 0; i < storObj.get_count(); ++i)
-                    if (storObj.get_el(i).get_highlighted() == true)
-                        storObj.get_el(i).move(move, pictureBox1.Width, pictureBox1.Height, 10);
+                storObj.move_highlighted_objects(move, pictureBox1.Width, pictureBox1.Height, 10);
             }
 
             pictureBox1.Invalidate();
@@ -117,19 +111,15 @@ namespace Lab7_OOP
                 int ind = -1; // попадание по объекту с индексом ind
 
                 // определяем попадание по существующему объекту 
-                for (int i = 0; i < storObj.get_count(); ++i)
-                    if (storObj.get_el(i).mouseClick_on_Object(e.X, e.Y))
-                        ind = i;
+                ind = storObj.mouseClick_on_Object(e.X, e.Y);
 
                 // не попали по объекту 
                 if (ind == -1)
                 {
                     // убираем все выделения
-                    setAllHighlightFalse();
+                    storObj.setAllHighlightFalse();
 
                     // создаем новый объект
-                    //// если нов. об. не линия и не многоугольник
-                    //if (cur_select != "CLine" && cur_select != "CPolygon")
                     // если нов. об. не линия
                     if (cur_select != "CLine")
                         {
@@ -168,7 +158,7 @@ namespace Lab7_OOP
                     // если ctrl не зажат - убираем остальные выделения
                     else if (ctrlPress != true)
                     {
-                        setAllHighlightFalse();
+                        storObj.setAllHighlightFalse();
                     }
                 }
                 // выделяем объект, по которому попали
@@ -203,9 +193,7 @@ namespace Lab7_OOP
         {
             Color new_color = ((Button)sender).BackColor;
             // у выделенных объектов меняем цвет
-            for (int i = 0; i < storObj.get_count(); ++i)
-                if (storObj.get_el(i).get_highlighted() == true)
-                    storObj.get_el(i).set_color(new_color);
+            storObj.setColor_highlighted_objects(new_color);
             // меняем текущий цвет, используемый при рисовании новых фигур
             Brush.Color = new_color;
             Brush.normBrush.Color = new_color;
@@ -230,11 +218,7 @@ namespace Lab7_OOP
         }
         private void btn_clear_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < storObj.get_count(); ++i)
-            {
-                storObj.del(i);
-                i--;
-            }
+            storObj.del_all_objects();
             pictureBox1.Invalidate();
         }
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
@@ -247,35 +231,13 @@ namespace Lab7_OOP
         private void btn_Group_Click(object sender, EventArgs e)
         {   // добавляем все выделенные объекты в новую группу,
             // удаляем их из хранилища, группу добавляем в хранилище
-            CGroup new_group = new CGroup();
-            int i = 0;
-            while (i < storObj.get_count())
-            {
-                if (storObj.get_el(i).get_highlighted() == true)
-                {
-                    storObj.get_el(i).change_highlight();
-                    new_group.addObject(storObj.get_el(i));
-                    storObj.del(i);
-                }
-                else i++;
-            }
-            storObj.add(new_group);
-            // объекты внутри группы и группа(рамка) выделяются
-            storObj.get_el(i).change_highlight();
+            storObj.add_new_group();
             pictureBox1.Invalidate();
         }
         private void btn_DisGroup_Click(object sender, EventArgs e)
-        {   // из всех выделенных групп переносим объекты в хранилище и удаляем группы из хранилища
-            // цикл проходит задом наперед на случай, если группа содержала группу, а мы не хотим 
-            // разгруппировывать внутр. группу
-            for (int i = storObj.get_count()-1; i >=0; --i)
-                if (storObj.get_el(i) != null && storObj.get_el(i).get_highlighted() == true && storObj.get_el(i).classname() == "CGroup")
-                {
-                    for (int j = 0; j < (storObj.get_el(i) as CGroup).get_count(); ++j)
-                        storObj.add((storObj.get_el(i) as CGroup).get_el(j));
-                    storObj.del(i);
-                    i++;
-                }
+        {   
+            // из всех выделенных групп переносим объекты в хранилище и удаляем группы из хранилища
+            storObj.del_highlighted_groups();
             pictureBox1.Invalidate();
         }
 
