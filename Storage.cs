@@ -134,9 +134,12 @@ namespace Lab7_OOP
                 }
                 else i++;
             }
-            add(new_group);
-            // объекты внутри группы и группа(рамка) выделяются
-            st[i].change_highlight();
+            if (new_group.get_count() != 0)
+            {
+                add(new_group);
+                // объекты внутри группы и группа(рамка) выделяются
+                st[i].change_highlight();
+            }
         }
         public void del_highlighted_groups()
         {

@@ -81,6 +81,7 @@ namespace Lab7_OOP
             this.CTriangle = new System.Windows.Forms.Button();
             this.CCircle = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
+            this.btn_save = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.btn_load = new System.Windows.Forms.Button();
             this.btn_clear = new System.Windows.Forms.Button();
@@ -93,7 +94,6 @@ namespace Lab7_OOP
             this.btn_DisGroup = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.btn_Group = new System.Windows.Forms.Button();
-            this.btn_save = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -779,6 +779,21 @@ namespace Lab7_OOP
             this.panel7.Size = new System.Drawing.Size(55, 198);
             this.panel7.TabIndex = 17;
             // 
+            // btn_save
+            // 
+            this.btn_save.BackColor = System.Drawing.Color.Gainsboro;
+            this.btn_save.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_save.BackgroundImage")));
+            this.btn_save.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_save.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btn_save.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btn_save.Location = new System.Drawing.Point(7, 24);
+            this.btn_save.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btn_save.Name = "btn_save";
+            this.btn_save.Size = new System.Drawing.Size(38, 35);
+            this.btn_save.TabIndex = 22;
+            this.btn_save.UseVisualStyleBackColor = false;
+            this.btn_save.Click += new System.EventHandler(this.btn_save_Click);
+            // 
             // label11
             // 
             this.label11.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
@@ -904,21 +919,6 @@ namespace Lab7_OOP
             this.btn_Group.TabIndex = 2;
             this.btn_Group.UseVisualStyleBackColor = false;
             this.btn_Group.Click += new System.EventHandler(this.btn_Group_Click);
-            // 
-            // btn_save
-            // 
-            this.btn_save.BackColor = System.Drawing.Color.Gainsboro;
-            this.btn_save.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_save.BackgroundImage")));
-            this.btn_save.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btn_save.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btn_save.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btn_save.Location = new System.Drawing.Point(7, 24);
-            this.btn_save.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btn_save.Name = "btn_save";
-            this.btn_save.Size = new System.Drawing.Size(38, 35);
-            this.btn_save.TabIndex = 22;
-            this.btn_save.UseVisualStyleBackColor = false;
-            this.btn_save.Click += new System.EventHandler(this.btn_save_Click);
             // 
             // Form1
             // 
